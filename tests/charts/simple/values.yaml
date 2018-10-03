@@ -1,0 +1,4 @@
+name: simple
+namespace: simple-namespace
+port: 80
+docker_hub_name: simple-company
