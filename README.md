@@ -1,5 +1,9 @@
 # Quick and Dirty Helm Template
 
+[![Build Status](https://travis-ci.org/fiji-flo/qdht.svg?branch=master)](https://travis-ci.org/fiji-flo/qdht)
+
+---
+
 The goal of this project is to have a simple single binary tool to render helm like charts.
 
 Given the following directory tree:

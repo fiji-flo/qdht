@@ -8,7 +8,7 @@ name = "qdht"
 path = "src/lib.rs"
 
 [[bin]]
-name = "dqht"
+name = "qdht"
 path = "src/main.rs"
 
 [dependencies]
