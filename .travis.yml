@@ -15,8 +15,28 @@ matrix:
 before_script:
   - rustup component add rustfmt-preview
   - rustup component add clippy-preview
+
 script:
   - cargo fmt --all -- --check
   - cargo clippy --all
   - cargo build --verbose --all
   - cargo test --verbose --all
+
+before_deploy:
+  - sh ci/before_deploy.sh
+
+deploy:
+  provider: releases
+  api_key:
+    secure: C2wrcMKNyijXZsfE46Fm4y9RXiKDFoOJ0m5LPjFQ5Vm0dYOnLTOnSF7ljX4W6twlnY36nhk9HFe4030DACgI6p+6yYwIKcvMpyqZjWdn1VF3WLIgGB0fqU0GK6OoA//3EgyZ1oHIK6aZVwblZEzXLZd0GKwTzOT4cG2kPwPBJ5kJJBrEiCAfHTsBRGK6Wj0oHSf5HiIYuis39zJRaDAk1N7NdrL49KeOFwIisy3CpuYsX+Sfs8PAAzupcDiSUMrKZW2RZ7bPqACHYKcfS7cdS1YzTxkcJrBCB8vjgxx3utBjP1pjdzJCRVIYpZTDgPoz4iPTkvqpvqO8TCBy/XLd9ELiRqAUNTcOn/WjcB4VduYty0eL8e2DzKu+R32hCi8KA16IHlDRfl+giuJLEsO/xEnmwIf40NuWSsfBV03XNZeB5FBozIHszYDKNgvSS/T/ReFKvdmD+6oMEcm++zuP7pChYZgsIzAfJAFccE+x+K2f0OxdE810NAmAzenXdeZqkFeHEIAm6KdaLW8AujqfRVwX/Kjm2T4qu2RHztibZp6v+hmhnfFUfz40M8YmLmh5KCd0hAydzZuMzGwa2bd7GFVovrV1QFZ3VSLA9lTTL4BIroocRWNxGNr/gc4Nb6/wRzkLdzY/r1PZov5raJphmn+oOLCipbpmXAmxMbOZ6uI=
+  file: qdht-$TRAVIS_TAG-x86_64-linux
+  on:
+    tags: true
+    repo: fiji-flo/qdht
+    rust: stable
+  skip_cleanup: true
+
+
+notifications:
+  email:
+    on_success: never
