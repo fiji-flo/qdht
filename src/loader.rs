@@ -63,7 +63,6 @@ fn load_yaml(file_name: &str) -> Result<Vec<Yaml>, String> {
 pub fn load_values_yaml(values: &[String]) -> Result<Value, String> {
     let mut v = vec![];
     for file_name in values {
-        println!("loading {}", file_name);
         v.append(&mut load_yaml(file_name)?);
     }
     Ok(v.into_iter()

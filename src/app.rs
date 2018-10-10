@@ -66,7 +66,6 @@ where
     } else {
         vec![]
     };
-    println!("templating");
     let out = templates
         .iter()
         .map(|t| template_file(t, &context))
