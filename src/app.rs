@@ -28,6 +28,13 @@ where
                 .multiple(true)
                 .help("yaml value files for template"),
         ).arg(
+            Arg::with_name("overrides")
+                .long("set")
+                .takes_value(true)
+                .number_of_values(1)
+                .multiple(true)
+                .help("set values from command line"),
+        ).arg(
             Arg::with_name("execute")
                 .short("x")
                 .long("execute")
@@ -48,13 +55,19 @@ where
     T: Into<OsString> + Clone,
 {
     let matches = parse_args(itr);
-    let updates = load_values_yaml(
+    let values = load_values_yaml(
         &matches
             .values_of("values")
             .unwrap_or_default()
             .map(String::from)
             .collect::<Vec<String>>(),
     )?;
+    let overrides = load_strvals(
+        &matches
+            .value_of("overrides")
+            .unwrap_or_default()
+    )?;
+    let updates = merge(values, overrides);
     let mut values = HashMap::new();
     values.insert(String::from("Values"), updates);
     let values = Value::Map(values);

@@ -10,7 +10,7 @@ use yaml_rust::{Yaml, YamlLoader};
 
 use gtmpl::Value;
 
-fn merge(values: Value, update: Value) -> Value {
+pub fn merge(values: Value, update: Value) -> Value {
     if let Value::Map(mut left) = values {
         match update {
             Value::Map(right) => {
@@ -29,6 +29,18 @@ fn merge(values: Value, update: Value) -> Value {
         return Value::Map(left);
     }
     update.clone()
+}
+
+pub fn load_strvals(strings: &str) -> Result<Value, String> {
+    let values: Result<HashMap<String, Value>, String> =strings.split(',').map(|s| {
+        let kv: Vec<&str> = s.splitn(2, '=').collect();
+        match kv.len() {
+            1 => Ok((String::from(kv[0]), Value::from(""))),
+            2 => Ok((String::from(kv[0]), Value::from(kv[1]))),
+            _ => Err(String::from("please use key1=value1,key2=value2"))
+        }
+    }).collect();
+    values.map(|v| Value::from(v))
 }
 
 fn yaml_to_gtmpl_value(yaml: Yaml) -> Value {

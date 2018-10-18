@@ -1,6 +1,6 @@
 [package]
 name = "qdht"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Florian Merz <flomerz@gmail.com>"]
 
 [lib]
