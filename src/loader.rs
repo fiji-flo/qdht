@@ -32,14 +32,16 @@ pub fn merge(values: Value, update: Value) -> Value {
 }
 
 pub fn load_strvals(strings: &str) -> Result<Value, String> {
-    let values: Result<HashMap<String, Value>, String> =strings.split(',').map(|s| {
-        let kv: Vec<&str> = s.splitn(2, '=').collect();
-        match kv.len() {
-            1 => Ok((String::from(kv[0]), Value::from(""))),
-            2 => Ok((String::from(kv[0]), Value::from(kv[1]))),
-            _ => Err(String::from("please use key1=value1,key2=value2"))
-        }
-    }).collect();
+    let values: Result<HashMap<String, Value>, String> = strings
+        .split(',')
+        .map(|s| {
+            let kv: Vec<&str> = s.splitn(2, '=').collect();
+            match kv.len() {
+                1 => Ok((String::from(kv[0]), Value::from(""))),
+                2 => Ok((String::from(kv[0]), Value::from(kv[1]))),
+                _ => Err(String::from("please use key1=value1,key2=value2")),
+            }
+        }).collect();
     values.map(|v| Value::from(v))
 }
 

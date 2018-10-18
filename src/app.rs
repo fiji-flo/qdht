@@ -62,11 +62,7 @@ where
             .map(String::from)
             .collect::<Vec<String>>(),
     )?;
-    let overrides = load_strvals(
-        &matches
-            .value_of("overrides")
-            .unwrap_or_default()
-    )?;
+    let overrides = load_strvals(&matches.value_of("overrides").unwrap_or_default())?;
     let updates = merge(values, overrides);
     let mut values = HashMap::new();
     values.insert(String::from("Values"), updates);
